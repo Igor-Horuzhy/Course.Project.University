@@ -41,7 +41,6 @@ public class ReadMatrix {
                         arr[i][j] = sc.nextInt();
                     }
                 }
-
             }
         }
         return arr;

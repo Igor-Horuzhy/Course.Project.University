@@ -16,13 +16,13 @@ import java.util.Scanner;
 /**
  * Created by Игорь on 31.10.2016.
  */
+// fdfd
 public class GUI extends JFrame {
     JLabel name, info, ic;
     JButton click, read2, read1,multiply;
     File file;
     double arr1[][];
     double arr2 [][];
-1
     GUI() {
         super("Matrix calculator");
         getContentPane().setLayout(null);
@@ -111,4 +111,5 @@ public class GUI extends JFrame {
         }
     }
 }
+
 
