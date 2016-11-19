@@ -7,15 +7,14 @@ import java.util.Scanner;
  * Created by Игорь on 06.11.2016.
  */
 public class ReadMatrix {
-    Scanner sc;
-    int rows,cols;
-    int arr[][];
+    private Scanner sc;
+    private int rows,cols;
+    private int arr[][];
     public void open(File file) {
         try {
             sc = new Scanner(file);
-            System.out.println("Успешно открыт");
         } catch (FileNotFoundException e) {
-            System.out.println("Не удалось открыть");
+            System.out.println("Что-то пошло не так");
         }
     }
     public double[][] readFile(File file) throws IOException {

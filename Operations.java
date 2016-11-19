@@ -2,11 +2,13 @@ package Course_project;
 
 import java.util.Arrays;
 
+
 /**
  * Created by Игорь on 07.11.2016.
  */
-public class Operations {
-    public static int[][] multiplyMatrix(final double[][] firstMatrix,
+public class Operations  {
+    GUI gui = new GUI();
+    public int[][] multiplyMatrix(final double[][] firstMatrix,
                                           final double[][] secondMatrix) {
         final int rowCount = firstMatrix.length;             // Число строк результирующей матрицы.
         final int colCount = secondMatrix[0].length;         // Число столбцов результирующей матрицы.
@@ -21,7 +23,6 @@ public class Operations {
                     result[row][col] = sum;
                 }
             }
-
             return result;
         }
         return null;

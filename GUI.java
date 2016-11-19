@@ -18,14 +18,18 @@ import java.util.Scanner;
  */
 // fdfd
 public class GUI extends JFrame {
-    JLabel name, info, ic;
-    JButton click, read2, read1,multiply;
-    File file;
-    double arr1[][];
-    double arr2 [][];
+    private JLabel name, info, ic,statusbar;
+    private int[][] resmult;
+    private JButton click, read2, read1,multiply;
+    private JTextArea matric = new JTextArea(10,21);
+    private File file;
+    private double arr1[][];
+    private double arr2 [][];
     GUI() {
         super("Matrix calculator");
+        matric.setEditable(false);
         getContentPane().setLayout(null);
+        statusbar = new JLabel("Готов к работе");
         name = new JLabel("Matrix calculator");
         name.setFont(new Font("Italic", Font.ITALIC + Font.BOLD, 20));
         name.setForeground(new Color(52, 121, 238));
@@ -48,16 +52,24 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 getContentPane().removeAll();
                 getContentPane().repaint();
-                add(read1).setBounds(10, 10, 180, 20);
-                add(read2).setBounds(10, 40, 180, 20);
-                add(multiply).setBounds(10,70,180,20);
+                add(matric).setBounds(500,170,100,100);
+                add(statusbar).setBounds(1,537,500,100);
+                add(read1).setBounds(10, 10, 180, 20);  // First button of openning matrix
+                add(read2).setBounds(10, 40, 180, 20);  // Second button of openning matrix
+                add(multiply).setBounds(10,70,180,20);  // Multiplying first and second matrix
             }
         });   // Нажатие на вход
         multiply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Operations tt = new Operations();
-                System.out.println(Arrays.deepToString(tt.multiplyMatrix(arr1,arr2)));
+                if(tt.multiplyMatrix(arr1,arr2) == null ){
+                    statusbar.setText("Количество столбцов первой матрицы не равно количеству строк второй матрицы");
+                }
+                else {
+                   resmult =  tt.multiplyMatrix(arr1, arr2);
+                    mtoar(resmult);
+                }
             }
         });
         read1Action r1 = new read1Action();
@@ -65,7 +77,6 @@ public class GUI extends JFrame {
         read2Action r2 = new read2Action();
         read2.addActionListener(r2);            // Чтение второй матрицы
     }
-
     private class read1Action implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -73,7 +84,7 @@ public class GUI extends JFrame {
             JFileChooser dialog = new JFileChooser();
             dialog.setBounds(0, 0, 500, 500);
             dialog.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            dialog.setApproveButtonText("Выбрать собственноручно");
+            dialog.setApproveButtonText("Выбрать");
             dialog.setMultiSelectionEnabled(false);
             dialog.showOpenDialog(fr);
             dialog.setVisible(true);
@@ -82,8 +93,9 @@ public class GUI extends JFrame {
             r1.open(file);
             try {
                 arr1 = r1.readFile(file);
+                statusbar.setText("Файл открыт, матрица загружена");
             } catch (IOException e1) {
-                System.out.println("Не получилось открыть");
+                statusbar.setText("Не удалось открыть файл");
             }
             r1.close();
         }
@@ -104,11 +116,24 @@ public class GUI extends JFrame {
             r1.open(file);
             try {
                 arr2 = r1.readFile(file);
+                statusbar.setText("Файл открыт, 2-ая матрица загружена");
             } catch (IOException e1) {
-                System.out.println("Не получилось открыть");
+                statusbar.setText("Не удалось открыть файл");
             }
             r1.close();
         }
+    }
+    public void mtoar(int arr [][]){
+        System.out.println(arr[0].length);
+        System.out.println(arr.length);
+        String matricaString = "";
+        for(int i=0; i<arr.length; i++){
+            for( int j=0; j<arr[0].length; j++){
+                matricaString += arr[i][j] + "  ";
+            }
+            matricaString += "\n";
+        }
+        matric.setText(matricaString);
     }
 }
 
